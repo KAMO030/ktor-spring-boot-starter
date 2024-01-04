@@ -11,6 +11,12 @@
             "name": "ktor.server.path",
             "description": "path.",
             "type": "java.lang.String"
+        },
+        {
+            "defaultValue": "/",
+            "name": "ktor.server.host",
+            "description": "host.",
+            "type": "java.lang.String"
         }
     ]
 }
