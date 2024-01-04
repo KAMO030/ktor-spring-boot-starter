@@ -1,0 +1,16 @@
+{
+    "properties": [
+        {
+            "defaultValue": 8080,
+            "name": "ktor.server.port",
+            "description": "port.",
+            "type": "java.lang.Integer"
+        },
+        {
+            "defaultValue": "/",
+            "name": "ktor.server.path",
+            "description": "path.",
+            "type": "java.lang.String"
+        }
+    ]
+}
