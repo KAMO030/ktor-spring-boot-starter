@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.core.env.Environment
@@ -22,7 +21,7 @@ import org.springframework.core.env.Environment
 @Import(KtorServerStartStopLifecycle::class)
 class KtorServerAutoConfiguration(
     private val properties: KtorServerProperties,
-    private val context: ApplicationContext
+    private val environment: Environment
 ) {
 
     @Bean
@@ -57,7 +56,7 @@ class KtorServerAutoConfiguration(
     ): ApplicationEngineEnvironment {
         return applicationEngineEnvironment {
             this.log =
-                KtorSimpleLogger(context.environment.getProperty("spring.application.name") ?: "ktor.application")
+                KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
             this.rootPath = properties.path
             modules.forEach { this.module { it.apply { install() } } }
             this.connectors.addAll(connectors)
