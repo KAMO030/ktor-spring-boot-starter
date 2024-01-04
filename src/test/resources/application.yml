@@ -2,3 +2,6 @@ ktor:
   server:
     path: "/kamo"
     port: 8008
+spring:
+  application:
+    name: "KtorTeatApp"

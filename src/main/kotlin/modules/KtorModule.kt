@@ -1,9 +1,9 @@
-package io.github.ktor.springboot.plugins
+package io.github.ktor.springboot.modules
 
 import io.ktor.server.application.*
 
 
-interface  KtorPlugin {
+interface  KtorModule {
 
     fun Application.install()
 

@@ -1,9 +1,9 @@
-package io.github.ktor.springboot.plugins
+package io.github.ktor.springboot.modules
 
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 
-abstract class KtorSpringPlugin : KtorPlugin, ApplicationContextAware {
+abstract class KtorSpringModule : KtorModule, ApplicationContextAware {
 
     protected lateinit var context: ApplicationContext
 
