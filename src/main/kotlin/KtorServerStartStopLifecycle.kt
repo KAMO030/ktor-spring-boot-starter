@@ -11,6 +11,7 @@ class KtorServerStartStopLifecycle(private val engine: ApplicationEngine) : Smar
     }
 
     override fun stop() {
+        this.running = false
         engine.stop()
     }
 

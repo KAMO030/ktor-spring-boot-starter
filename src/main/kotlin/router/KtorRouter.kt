@@ -7,3 +7,5 @@ interface KtorRouter {
     fun Route.register()
 
 }
+
+typealias KtorRouterFun = Route.() -> Unit

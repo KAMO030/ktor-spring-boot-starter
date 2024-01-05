@@ -8,3 +8,5 @@ interface  KtorModule {
     fun Application.install()
 
 }
+
+typealias KtorModuleFun = Application.() -> Unit
