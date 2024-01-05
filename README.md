@@ -33,7 +33,7 @@
     2. KtorRouterFun (KtorRouterFun = Routing.() -> Unit)
    ```kotlin
     @Component
-    class TestComponent {
+    class TestRouting {
         @Bean
         fun c(): KtorRouterFun = {
             get("/c") { call.respondText { "c" } }
@@ -48,10 +48,40 @@
     3. RoutingExtensionFun
    ```kotlin
     @Component
-    class TestComponent { 
+    class TestRouting { 
         fun Routing.e() {
             get("/e"){ call.respondText { "e" } }
         }
     }
    ```
   > KtorRouter 和 RoutingExtensionFun 不能混用 （暂时）
+
+* module
+  1. KtorModule
+   ```kotlin
+    @Component
+    class TestModule : KtorModule { 
+        override fun Application.install() {
+            // ...
+        }
+    }
+   ```
+  2. KtorModuleFun (KtorModuleFun = Application.() -> Unit)
+   ```kotlin
+    @Component
+    class TestModule {
+        @Bean
+        fun module(): KtorModuleFun = {
+            // ...
+        }
+    }
+   ```
+  3. ApplicationExtensionFun
+   ```kotlin
+    @Component
+    class TestModule { 
+        fun Application.module() {
+            // ...
+        }
+    }
+   ```
