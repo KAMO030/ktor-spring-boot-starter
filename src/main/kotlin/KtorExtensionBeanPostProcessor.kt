@@ -22,13 +22,12 @@ class KtorExtensionBeanPostProcessor : BeanPostProcessor, BeanDefinitionRegistry
     companion object {
         private const val MODULE_ADAPTER_BEAN_NAME: String = "extensionBeanPostProcessorModuleAdapter"
         private const val ROUTER_ADAPTER_BEAN_NAME: String = "extensionBeanPostProcessorRouterAdapter"
+        private const val APPLICATION_TYPE_NAME = "io.ktor.server.application.Application"
+        private const val ROUTING_TYPE_NAME = "io.ktor.server.routing.Routing"
         private val defaultFunNameMaps = mapOf(
             KtorModule::class to "install",
             KtorRouter::class to "register"
         )
-
-        private const val APPLICATION_TYPE_NAME = "io.ktor.server.application.Application"
-        private const val ROUTING_TYPE_NAME = "io.ktor.server.routing.Routing"
     }
 
     private val moduleFunctions = mutableListOf<Pair<Any, KFunction<*>>>()
