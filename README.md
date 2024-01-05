@@ -54,7 +54,6 @@
         }
     }
    ```
-  > KtorRouter 和 RoutingExtensionFun 不能混用 （暂时）
 
 * module
   1. KtorModule
