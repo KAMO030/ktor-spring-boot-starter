@@ -42,40 +42,37 @@ class KtorServerAutoConfiguration(
 
 
     @Bean
-    fun defaultEngineConnectorConfig(): EngineConnectorConfig {
-        return EngineConnectorBuilder().apply {
-            this.port = properties.port
-            this.host = properties.host
-        }
-    }
-
-    @Bean
     @ConditionalOnMissingBean
     fun defaultEnvironment(
         modules: List<KtorModule>,
         moduleFunList: List<KtorModuleFun>,
         connectors: List<EngineConnectorConfig>
-    ): ApplicationEngineEnvironment {
+    ): ApplicationEngineEnvironment = applicationEngineEnvironment {
         val mergedModuleFunList: List<KtorModuleFun> = moduleFunList + modules.map { { it.apply { install() } } }
-        return applicationEngineEnvironment {
-            this.log =
-                KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
-            this.rootPath = properties.path
-            this.modules.addAll(mergedModuleFunList)
-            this.connectors.addAll(connectors)
-        }
+        this.log =
+            KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
+        this.rootPath = properties.path
+        this.modules.addAll(mergedModuleFunList)
+        this.connectors.addAll(connectors)
     }
 
     @Bean
     fun routeModules(
         routes: List<KtorRouter>,
         routeFunList: List<KtorRouterFun>
-    ): KtorModuleFun {
-        return {
-            routing {
-                val mergedRouterFunList: List<KtorRouterFun> = routeFunList + routes.map { { it.apply { register() } } }
-                mergedRouterFunList.forEach { it() }
-            }
+    ): KtorModuleFun = {
+        routing {
+            val mergedRouterFunList: List<KtorRouterFun> = routeFunList + routes.map { { it.apply { register() } } }
+            mergedRouterFunList.forEach { it() }
+        }
+    }
+
+
+    @Bean
+    fun defaultEngineConnectorConfig(): EngineConnectorConfig {
+        return EngineConnectorBuilder().apply {
+            this.port = properties.port
+            this.host = properties.host
         }
     }
 
