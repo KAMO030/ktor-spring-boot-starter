@@ -4,7 +4,6 @@ import io.github.ktor.springboot.modules.KtorModule
 import io.github.ktor.springboot.modules.KtorModuleFun
 import io.github.ktor.springboot.router.KtorRouter
 import io.github.ktor.springboot.router.KtorRouterFun
-import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.routing.*
