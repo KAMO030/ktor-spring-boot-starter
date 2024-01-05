@@ -49,8 +49,7 @@ class KtorServerAutoConfiguration(
         connectors: List<EngineConnectorConfig>
     ): ApplicationEngineEnvironment = applicationEngineEnvironment {
         val mergedModuleFunList: List<KtorModuleFun> = moduleFunList + modules.map { { it.apply { install() } } }
-        this.log =
-            KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
+        this.log = KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
         this.rootPath = properties.path
         this.modules.addAll(mergedModuleFunList)
         this.connectors.addAll(connectors)
