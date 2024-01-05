@@ -34,11 +34,7 @@ class TestConfig {
         }
     }
 
-    fun Routing.e() {
-        get("/e"){
-            call.respondText { "e" }
-        }
-    }
+
 
 }
 
@@ -55,5 +51,11 @@ class TestController : KtorRouter {
 
     suspend fun PipelineContext<Unit, ApplicationCall>.b() {
         call.respondText { "b" }
+    }
+
+    fun Routing.e() {
+        get("/e") {
+            call.respondText { "e" }
+        }
     }
 }

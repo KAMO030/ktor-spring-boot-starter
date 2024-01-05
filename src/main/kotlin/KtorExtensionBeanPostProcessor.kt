@@ -12,6 +12,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
 import org.springframework.context.annotation.Role
+import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.declaredMemberExtensionFunctions
 import kotlin.reflect.full.extensionReceiverParameter
@@ -21,6 +22,11 @@ class KtorExtensionBeanPostProcessor : BeanPostProcessor, BeanDefinitionRegistry
     companion object {
         private const val MODULE_ADAPTER_BEAN_NAME: String = "extensionBeanPostProcessorModuleAdapter"
         private const val ROUTER_ADAPTER_BEAN_NAME: String = "extensionBeanPostProcessorRouterAdapter"
+        private val defaultFunNameMaps = mapOf(
+            KtorModule::class to "install",
+            KtorRouter::class to "register"
+        )
+
         private const val APPLICATION_TYPE_NAME = "io.ktor.server.application.Application"
         private const val ROUTING_TYPE_NAME = "io.ktor.server.routing.Routing"
     }
@@ -48,18 +54,20 @@ class KtorExtensionBeanPostProcessor : BeanPostProcessor, BeanDefinitionRegistry
             bean::class.declaredMemberExtensionFunctions
         }.getOrNull() ?: return bean
 
-        extFunctions.forEach {
-            if (it.extensionReceiverParameter?.type?.toString() == APPLICATION_TYPE_NAME && !bean.instanceOf(KtorModule::class)) {
-                moduleFunctions.add(bean to it)
-            } else if (it.extensionReceiverParameter?.type?.toString() == ROUTING_TYPE_NAME && !bean.instanceOf(
-                    KtorRouter::class
-                )
-            ) {
-                routerFunctions.add(bean to it)
+        extFunctions.filter { it.parameters.size == 2 }
+            .forEach {
+                if (isExtensionFunBy(bean, it, APPLICATION_TYPE_NAME, KtorModule::class)) {
+                    moduleFunctions.add(bean to it)
+                } else if (isExtensionFunBy(bean, it, ROUTING_TYPE_NAME, KtorRouter::class)) {
+                    routerFunctions.add(bean to it)
+                }
             }
-        }
         return bean
     }
+
+    private fun isExtensionFunBy(bean: Any, function: KFunction<*>, typeName: String, type: KClass<*>): Boolean =
+        function.extensionReceiverParameter?.type?.toString() == typeName
+                && (!bean.instanceOf(type) || defaultFunNameMaps[type] != function.name)
 
     override fun postProcessBeanDefinitionRegistry(registry: BeanDefinitionRegistry) {
         val extensionModuleAdapterBD = BeanDefinitionBuilder
