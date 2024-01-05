@@ -1,7 +1,7 @@
-package io.github.ktor.springboot.test
+package io.github.kamo.ktor.springboot.test
 
-import io.github.ktor.springboot.router.KtorRouter
-import io.github.ktor.springboot.router.KtorRouterFun
+import io.github.kamo.ktor.springboot.router.KtorRouter
+import io.github.kamo.ktor.springboot.router.KtorRouterFun
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*

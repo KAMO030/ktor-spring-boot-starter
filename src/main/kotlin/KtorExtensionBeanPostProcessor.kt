@@ -1,7 +1,7 @@
-package io.github.ktor.springboot
+package io.github.kamo.ktor.springboot
 
-import io.github.ktor.springboot.modules.KtorModule
-import io.github.ktor.springboot.router.KtorRouter
+import io.github.kamo.ktor.springboot.modules.KtorModule
+import io.github.kamo.ktor.springboot.router.KtorRouter
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.util.reflect.*

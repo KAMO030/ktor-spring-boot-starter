@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.spring.dependency.management)
 }
 
-group = "io.github.ktor"
+group = "io.github.kamo"
 version = "1.0.0"
 
 repositories {
@@ -16,6 +16,9 @@ repositories {
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
+    }
+    all {
+        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
     }
 }
 dependencies {
@@ -33,9 +36,14 @@ tasks.test {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
-        freeCompilerArgs += "-Xcontext-receivers"
     }
 }
 kotlin {
     jvmToolchain(8)
+}
+
+buildscript {
+    dependencies {
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+    }
 }

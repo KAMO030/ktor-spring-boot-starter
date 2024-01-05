@@ -1,1 +1,1 @@
-package io.github.ktor.springboot;
+package io.github.kamo.ktor.springboot;

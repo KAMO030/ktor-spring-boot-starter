@@ -1,4 +1,4 @@
-package io.github.ktor.springboot.router
+package io.github.kamo.ktor.springboot.router
 
 import io.ktor.server.routing.*
 

@@ -1,4 +1,4 @@
-package io.github.ktor.springboot
+package io.github.kamo.ktor.springboot
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 @ConfigurationProperties(prefix = "ktor.server", ignoreUnknownFields = true)

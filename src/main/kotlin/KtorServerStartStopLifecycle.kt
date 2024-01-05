@@ -1,4 +1,4 @@
-package io.github.ktor.springboot
+package io.github.kamo.ktor.springboot
 
 import io.ktor.server.engine.*
 import org.springframework.context.SmartLifecycle

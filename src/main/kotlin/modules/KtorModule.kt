@@ -1,4 +1,4 @@
-package io.github.ktor.springboot.modules
+package io.github.kamo.ktor.springboot.modules
 
 import io.ktor.server.application.*
 
