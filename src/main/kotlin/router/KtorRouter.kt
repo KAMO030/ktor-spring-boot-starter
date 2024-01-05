@@ -4,8 +4,8 @@ import io.ktor.server.routing.*
 
 interface KtorRouter {
 
-    fun Route.register()
+    fun Routing.register()
 
 }
 
-typealias KtorRouterFun = Route.() -> Unit
+typealias KtorRouterFun = Routing.() -> Unit
