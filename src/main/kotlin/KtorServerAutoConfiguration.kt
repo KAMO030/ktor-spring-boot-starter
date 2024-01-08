@@ -1,8 +1,6 @@
 package io.github.kamo.ktor.springboot
 
-import io.github.kamo.ktor.springboot.modules.KtorModule
 import io.github.kamo.ktor.springboot.modules.KtorModuleFun
-import io.github.kamo.ktor.springboot.router.KtorRouter
 import io.github.kamo.ktor.springboot.router.KtorRouterFun
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -19,7 +17,7 @@ import org.springframework.core.env.Environment
 @AutoConfiguration
 @EnableConfigurationProperties(KtorServerProperties::class)
 @ConditionalOnClass(ApplicationEngine::class)
-@Import(KtorServerStartStopLifecycle::class,KtorExtensionBeanPostProcessor::class)
+@Import(KtorServerStartStopLifecycle::class, KtorFunctionBeanPostProcessor::class)
 class KtorServerAutoConfiguration(
     private val properties: KtorServerProperties,
     private val environment: Environment
@@ -44,25 +42,21 @@ class KtorServerAutoConfiguration(
     @Bean
     @ConditionalOnMissingBean
     fun defaultEnvironment(
-        modules: List<KtorModule>,
-        moduleFunList: List<KtorModuleFun>,
+        modules: List<KtorModuleFun>,
         connectors: List<EngineConnectorConfig>
     ): ApplicationEngineEnvironment = applicationEngineEnvironment {
-        val mergedModuleFunList: List<KtorModuleFun> = moduleFunList + modules.map { { it.apply { install() } } }
         this.log = KtorSimpleLogger(environment.getProperty("spring.application.name") ?: "ktor.application")
         this.rootPath = properties.path
-        this.modules.addAll(mergedModuleFunList)
+        this.modules.addAll(modules)
         this.connectors.addAll(connectors)
     }
 
     @Bean
     fun routeModules(
-        routes: List<KtorRouter>,
         routeFunList: List<KtorRouterFun>
     ): KtorModuleFun = {
         routing {
-            val mergedRouterFunList: List<KtorRouterFun> = routeFunList + routes.map { { it.apply { register() } } }
-            mergedRouterFunList.forEach { it() }
+            routeFunList.forEach { it() }
         }
     }
 
